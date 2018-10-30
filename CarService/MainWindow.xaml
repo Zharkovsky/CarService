@@ -4,9 +4,463 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarService"
+        xmlns:views="clr-namespace:CarService.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Автомастерские">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveWorkshopCommand}" CommandParameter="{Binding SelectedWorkshop}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddWorkshopCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Workshops}" SelectedItem="{Binding SelectedWorkshop}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Name}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedWorkshop}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:WorkshopControl DataContext="{Binding SelectedWorkshop}"/>
+                        <Button Content="Сохранить" Command="{Binding SaveWorkshopCommand}" CommandParameter="{Binding SelectedWorkshop}" Grid.Row="1" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Клиенты">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveOwnerCommand}" CommandParameter="{Binding SelectedOwner}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddOwnerCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Owners}" SelectedItem="{Binding SelectedOwner}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Name}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedOwner}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:OwnerControl DataContext="{Binding SelectedOwner}"/>
+                        <TextBlock Text="{Binding Message}" Grid.Row="1" Margin="10 0"/>
+                        <Button Content="Сохранить" Command="{Binding SaveOwnerCommand}" CommandParameter="{Binding SelectedOwner}" Grid.Row="2" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Марки авто">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveBrandCommand}" CommandParameter="{Binding SelectedBrand}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddBrandCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrand}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Name}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedBrand}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:BrandControl DataContext="{Binding SelectedBrand}"/>
+                        <TextBlock Text="{Binding Message}" Grid.Row="1" Margin="10 0"/>
+                        <Button Content="Сохранить" Command="{Binding SaveBrandCommand}" CommandParameter="{Binding SelectedBrand}" Grid.Row="2" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Автомобили">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveCarCommand}" CommandParameter="{Binding SelectedCar}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddCarCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Cars}" SelectedItem="{Binding SelectedCar}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Grz}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedCar}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:CarControl DataContext="{Binding SelectedCar}"/>
+                        <TextBlock Text="{Binding Message}" Grid.Row="1" Margin="10 0"/>
+                        <Button Content="Сохранить" Command="{Binding SaveCarCommand}" CommandParameter="{Binding SelectedCar}" Grid.Row="2" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Наряды">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveOrderCommand}" CommandParameter="{Binding SelectedOrder}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddOrderCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Grz}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedOrder}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:OrderControl DataContext="{Binding SelectedOrder}"/>
+                        <TextBlock Text="{Binding Message}" Grid.Row="1" Margin="10 0"/>
+                        <Button Content="Сохранить" Command="{Binding SaveOrderCommand}" CommandParameter="{Binding SelectedOrder}" Grid.Row="2" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Механики">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveMechanicCommand}" CommandParameter="{Binding SelectedMechanic}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddMechanicCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Mechanics}" SelectedItem="{Binding SelectedMechanic}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Name}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedMechanic}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:MechanicControl DataContext="{Binding SelectedMechanic}"/>
+                        <Button Content="Сохранить" Command="{Binding SaveMechanicCommand}" CommandParameter="{Binding SelectedMechanic}" Grid.Row="1" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Квалификации механиков">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveMechanicQualificationCommand}" CommandParameter="{Binding SelectedMechanicQualification}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddMechanicQualificationCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding MechanicQualifications}" SelectedItem="{Binding SelectedMechanicQualification}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Name}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedMechanicQualification}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:MechanicQualificationControl DataContext="{Binding SelectedMechanicQualification}"/>
+                        <TextBlock Text="{Binding Message}" Grid.Row="1" Margin="10 0"/>
+                        <Button Content="Сохранить" Command="{Binding SaveMechanicQualificationCommand}" CommandParameter="{Binding SelectedMechanicQualification}" Grid.Row="2" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Квалификации работ">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="-" Command="{Binding RemoveOrderQualificationCommand}" CommandParameter="{Binding SelectedOrderQualification}" Grid.Column="0" Background="#FFDE5353" Foreground="White"/>
+                            <Button Content="+" Command="{Binding AddOrderQualificationCommand}" Grid.Column="1" Background="#FF4CAA4C" Foreground="White"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="1" ItemsSource="{Binding OrderQualifications}" SelectedItem="{Binding SelectedOrderQualification}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5">
+                                        <Grid>
+                                            <TextBlock FontSize="14" Text="{Binding Path=Name}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedOrderQualification}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <views:OrderQualificationControl DataContext="{Binding SelectedOrderQualification}"/>
+                        <TextBlock Text="{Binding Message}" Grid.Row="1" Margin="10 0"/>
+                        <Button Content="Сохранить" Command="{Binding SaveOrderQualificationCommand}" CommandParameter="{Binding SelectedOrderQualification}" Grid.Row="2" Background="AliceBlue" Foreground="Black" Margin="10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

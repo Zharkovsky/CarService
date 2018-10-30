@@ -1,5 +1,4 @@
-﻿using CarService.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CarService
+namespace CarService.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для OwnerControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OwnerControl : UserControl
     {
-        public MainWindow()
+        public OwnerControl()
         {
             InitializeComponent();
-            DataContext = new RootViewModel();
         }
     }
 }
